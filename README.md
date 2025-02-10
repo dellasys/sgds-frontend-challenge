@@ -55,6 +55,7 @@ When values are selected, it is reflected as a badge within the combobox's input
 
 ## Get Started
 
+The repo uses Node v18+. If you are using `nvm` , run `nvm use` before installation
 Clone the repo. Then install.
 
 ```bash
