@@ -29,11 +29,13 @@ export class MyComboBox extends MyDropdown {
   filterMenu: FilterFunction = (inputValue: string, menuItem: string) => {
     const itemLowerCase = menuItem.toLowerCase();
     const valueLower = inputValue.toLowerCase();
+
     return itemLowerCase.startsWith(valueLower);
   };
 
   @state()
   filteredMenuList: string[] = [];
+  selectedMenuItems: string[] = [];
 
   private _handleInputChange(e: CustomEvent) {
     this.showMenu();
@@ -46,6 +48,8 @@ export class MyComboBox extends MyDropdown {
   private _handleSelectChange(e: KeyboardEvent | MouseEvent) {
     this.value = (e.target as MyDropdownItem).innerText;
     this._handleSelectSlot(e);
+    this.selectedMenuItems = [...this.selectedMenuItems, this.value];
+    this.value = "";
   }
 
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
