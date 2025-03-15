@@ -1,9 +1,12 @@
-import { html, nothing } from "lit";
+import { html } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ref } from "lit/directives/ref.js";
+
 import "./components/my-badge";
-import { MyDropdown } from "./components/my-dropdown";
+import "./components/my-dropdown-icon";
 import "./components/my-dropdown-item";
+
+import { MyDropdown } from "./components/my-dropdown";
 import { MyDropdownItem } from "./components/my-dropdown-item";
 import styles from "./my-combo-box.scss";
 
@@ -35,6 +38,8 @@ export class MyComboBox extends MyDropdown {
 
   @state()
   filteredMenuList: string[] = [];
+
+  @state()
   selectedMenuItems: string[] = [];
 
   private _handleInputChange(e: CustomEvent) {
@@ -55,15 +60,23 @@ export class MyComboBox extends MyDropdown {
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
   private _handleToggleUserInput(e: CustomEvent) {
     e.stopPropagation();
+
     this._onClickDropdownToggle();
     this.userInputElement.focus();
   }
 
-  private _handleRemoveItem = (menuItem: string) => {
-    const itemIndex = this.selectedMenuItems.indexOf(menuItem);
+  private _handleRemoveItem = (e: CustomEvent, menuItem: string) => {
+    e.stopPropagation();
 
-    this.selectedMenuItems.splice(itemIndex, 1);
-    this.requestUpdate();
+    this.selectedMenuItems = this.selectedMenuItems.filter(
+      (index) => index !== menuItem
+    );
+  };
+
+  private _handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Backspace") {
+      this.selectedMenuItems = this.selectedMenuItems.slice(0, -1);
+    }
   };
 
   render() {

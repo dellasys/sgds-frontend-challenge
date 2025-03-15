@@ -25,13 +25,13 @@ export class MyBadge extends BaseElement {
   menuItem = "";
 
   @property({ type: Function })
-  handleRemove: (menuItem: string) => void;
+  handleRemove: (e: CustomEvent, menuItem: string) => void;
 
   render() {
     return html`
       <span
         class="badge bg-primary"
-        @click=${() => this.handleRemove(this.menuItem)}
+        @click=${(e: CustomEvent) => this.handleRemove(e, this.menuItem)}
       >
         <slot></slot>
         <svg
