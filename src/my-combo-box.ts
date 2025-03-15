@@ -59,10 +59,22 @@ export class MyComboBox extends MyDropdown {
     this.userInputElement.focus();
   }
 
+  private _handleRemoveItem = (menuItem: string) => {
+    const itemIndex = this.selectedMenuItems.indexOf(menuItem);
+
+    this.selectedMenuItems.splice(itemIndex, 1);
+    this.requestUpdate();
+  };
+
   render() {
-    this.filteredMenuList = this.menuList.filter((item) =>
-      this.filterMenu(this.value, item)
-    );
+    this.filteredMenuList = this.menuList.filter((item) => {
+      if (this.selectedMenuItems.includes(item)) {
+        return false;
+      }
+
+      return this.filterMenu(this.value, item);
+    });
+
     return html`
       <div class="combobox dropdown multiselect">
         <div
