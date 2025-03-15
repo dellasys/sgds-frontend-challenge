@@ -21,9 +21,18 @@ export type BadgeVariant =
 export class MyBadge extends BaseElement {
   static styles = [BaseElement.styles, styles];
 
+  @property({ type: String, reflect: true })
+  menuItem = "";
+
+  @property({ type: Function })
+  handleRemove: (menuItem: string) => void;
+
   render() {
     return html`
-      <span class="badge bg-primary">
+      <span
+        class="badge bg-primary"
+        @click=${() => this.handleRemove(this.menuItem)}
+      >
         <slot></slot>
         <svg
           xmlns="http://www.w3.org/2000/svg"
