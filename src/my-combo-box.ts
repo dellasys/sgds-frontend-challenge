@@ -70,7 +70,13 @@ export class MyComboBox extends MyDropdown {
           ${ref(this.myDropdown)}
           class="form-control"
         >
-          <my-badge>Sample badge (to be replaced)</my-badge>
+          ${this.selectedMenuItems.map((menuItem) => {
+            return html`<my-badge
+              .handleRemove=${this._handleRemoveItem}
+              .menuItem=${menuItem}
+              >${menuItem}</my-badge
+            >`;
+          })}
           <input
             id="user-input"
             class="form-control-multiselect"
